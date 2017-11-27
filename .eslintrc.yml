@@ -2,3 +2,10 @@ extends: standard
 plugins:
   - standard
   - promise
+rules:
+  curly: error
+  indent: [warn ,4]
+  quotes:
+    - error
+    - single
+  no-new: off

@@ -1,49 +1,29 @@
-import Vue from "vue";
-import './style.scss';
-import genres from './util/genres'
+import Vue from 'vue'
+import './style.scss'
 
+import MovieList from './components/MovieList.vue'
+import MovieFilter from './components/MovieFilter.vue'
 new Vue({
 
     el: '#app',
-    components: {
-        'movie-list': {
-            template: `<div id="movie-list">
-                        <div v-for="movie in movies" class="movie">
-                            {{movie.title}}
-                        </div>
-                    </div>`,
-            data: function () {
-                return {
-                    movies: [
-                        { title: 'pulp fiction' },
-                        { title: 'home alone' },
-                        { title: 'austin powers' }]
-                }
-            }
-        },
-        'movie-filter': {
-            data() {
-                return { genres }
-            },
-            template:
-                `<div id="movie-filter">
-                    <h2>filter results</h2>
-                    <div class="filter-group">
-                    <check-filter v-for="genre in genres" v-bind:title="genre"></check-filter>
-                    </div>
-                </div>`,
-            components: {
-                'check-filter': {
-                    props: ['title'],
-                    template: `<div class="check-filter">
-                        <span class="checkbox"></span>
-                    <span class="check-filter-title">{{title}}</span>
-                            </div>`
+    data: {
+        genre: [],
+        times: []
+    },
+    methods: {
+        checkFilter (cat, title, checked) {
+            if (checked) {
+                this[cat].push(title)
+            } else {
+                let index = this[cat].indexOf(title)
+                if (index > -1) {
+                    this[cat].splice(index, 1)
                 }
             }
         }
     },
-    data: {
-
+    components: {
+        MovieList,
+        MovieFilter
     }
-});
+})
