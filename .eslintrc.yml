@@ -1,11 +1,12 @@
 extends: standard
 plugins:
-  - standard
-  - promise
+    - standard
+    - promise
 rules:
-  curly: error
-  indent: [warn ,4]
-  quotes:
+    curly: error
+    indent: [warn ,4]
+    quotes:
     - error
     - single
-  no-new: off
+    no-new: off
+    space-before-function-paren: never
