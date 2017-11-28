@@ -7,10 +7,16 @@ import MovieFilter from './components/MovieFilter.vue'
 import VueResource from 'vue-resource'
 
 import moment from 'moment-timezone'
+import {checkFilter} from './util/bus'
+
 moment.tz.setDefault('UTC')
 Object.defineProperty(Vue.prototype, '$moment', { get() { return this.$root.moment } })
 
 Vue.use(VueResource)
+
+
+const bus = new Vue()
+Object.defineProperty(Vue.prototype, '$bus', { get() { return this.$root.bus } })
 
 new Vue({
 
@@ -20,20 +26,11 @@ new Vue({
         time: [],
         movies: [],
         moment,
-        day :moment()
+        day :moment(),
+        bus
+
     },
-    methods: {
-        checkFilter (cat, title, checked) {
-            if (checked) {
-                this[cat].push(title)
-            } else {
-                let index = this[cat].indexOf(title)
-                if (index > -1) {
-                    this[cat].splice(index, 1)
-                }
-            }
-        }
-    },
+   
     components: {
         MovieList,
         MovieFilter
@@ -43,5 +40,7 @@ new Vue({
             .then(response => {
                 this.movies = response.data
             })
+        this.$bus.$on('check-filter',checkFilter.bind(this))
     }
+       
 })
