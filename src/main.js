@@ -8,8 +8,11 @@ import moment from 'moment-timezone'
 import {checkFilter, setDay} from './util/bus'
 import routes from './util/routes'
 
+import ToolTip from './util/tooltip'
+
 Vue.use(VueResource)
 Vue.use(VueRouter)
+Vue.use(ToolTip)
 
 moment.tz.setDefault('UTC')
 Object.defineProperty(Vue.prototype, '$moment', { get() { return this.$root.moment } })
@@ -45,36 +48,3 @@ new Vue({
 })
 
 
-import {addClass, removeClass,hasClass} from './util/helpers'
-
-let mouseOverHandler = function (event) {
-    let span = event.target.parentNode.getElementsByTagName('SPAN')[0]
-    addClass(span,'tooltip-show')
-
-}
-let mouseOutHandler = function (event) {
-    let span = event.target.parentNode.getElementsByTagName('SPAN')[0]
-    removeClass(span,'tooltip-show')
-
-}
-Vue.directive('tooltip',{
-    bind(el,bindings){
-        let span = document.createElement('SPAN');
-        let text = document.createTextNode('Seats available:')
-        span.appendChild(text)
-        addClass(span,'tooltip')
-        el.appendChild(span)
-        let div = el.getElementsByTagName('DIV')[0]
-        div.addEventListener('mouseover',mouseOverHandler)
-        div.addEventListener('mouseout',mouseOutHandler)
-        div.addEventListener('touchstart',mouseOverHandler)
-        div.addEventListener('touchend',mouseOutHandler)
-    },
-    unbind(el){
-        let div = el.getElementsByTagName('DIV')[0]
-        div.removeEventListener('mouseover',mouseOverHandler)
-        div.removeEventListener('mouseout',mouseOutHandler)
-        div.addEventListener('touchstart',mouseOverHandler)
-        div.addEventListener('touchend',mouseOutHandler)
-    }
-})
