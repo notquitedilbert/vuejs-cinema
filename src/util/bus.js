@@ -9,4 +9,7 @@ function checkFilter (cat, title, checked) {
     }
 }
 
-export {checkFilter}
+function setDay(day){this.day=day}
+
+
+export {checkFilter, setDay}
