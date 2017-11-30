@@ -1,5 +1,5 @@
 <template>
-    <div id="details" v-if="movie">
+    <div id="detail" v-if="movie">
         <movie-item v-bind:movie="movie">
             <div class="movie-details">
                 <p class="movie.genre">{{movie.Genre}}</p>
